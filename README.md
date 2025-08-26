@@ -21,3 +21,11 @@ A machine learning application that classifies tweets as **disaster-related** or
 - **Scikit-learn** – ML model (Logistic Regression)  
 - **Pandas / NumPy** – Data handling  
 - **Streamlit** – Web UI & Deployment  
+
+---
+
+## Images
+
+<img width="1463" height="859" alt="Screenshot 2025-08-26 135912" src="https://github.com/user-attachments/assets/e0030d37-bca9-4b57-8ee9-f3a396eb5cd7" />
+
+<img width="1381" height="825" alt="Screenshot 2025-08-26 135944" src="https://github.com/user-attachments/assets/56fb782c-6dfe-4d60-961c-4b6197f3c197" />
