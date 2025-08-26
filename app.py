@@ -2,12 +2,17 @@ import os
 import streamlit as st
 import pickle
 import re
-import nltk
-from nltk.corpus import stopwords
-from nltk.stem import PorterStemmer
+from nltk.stem import PorterStemmer  # still useful for stemming
 
-# Download stopwords if not already downloaded
-nltk.download('stopwords')
+# --- Custom Stopwords (replace nltk.stopwords) ---
+custom_stopwords = {
+    "a", "an", "the", "and", "or", "in", "on", "at", "for", "with",
+    "without", "about", "to", "from", "by", "of", "is", "am", "are",
+    "was", "were", "be", "been", "being", "have", "has", "had",
+    "do", "does", "did", "but", "if", "because", "as", "until", "while",
+    "this", "that", "these", "those", "it", "its", "he", "she", "they",
+    "them", "we", "you", "i", "me", "my", "mine", "yours", "ours"
+}
 
 # Paths to saved model and vectorizer
 MODEL_PATH = "models/disaster_tweet_model.pkl"
@@ -25,17 +30,17 @@ with open(MODEL_PATH, "rb") as f:
 with open(VECTORIZER_PATH, "rb") as f:
     vectorizer = pickle.load(f)
 
-# Preprocessing function
+# --- Preprocessing function ---
 def preprocess_text(text):
-    text = text.lower()  # lowercase
-    text = re.sub(r'http\S+|www\S+|https\S+', '', text, flags=re.MULTILINE)  # remove URLs
-    text = re.sub(r'\@w+|\#', '', text)  # remove mentions and hashtags
-    text = re.sub(r'[^A-Za-z\s]', '', text)  # remove punctuation/numbers
+    text = text.lower()  
+    text = re.sub(r'http\S+|www\S+|https\S+', '', text, flags=re.MULTILINE)  
+    text = re.sub(r'@\w+|#', '', text)  
+    text = re.sub(r'[^a-z\s]', '', text)  
     tokens = text.split()
-    tokens = [PorterStemmer().stem(word) for word in tokens if word not in stopwords.words('english')]
+    tokens = [PorterStemmer().stem(word) for word in tokens if word not in custom_stopwords]
     return " ".join(tokens)
 
-# Streamlit UI
+# --- Streamlit UI ---
 st.title("🌪 Disaster Tweet Classifier")
 st.write("Enter a tweet and find out if it’s about a disaster or not.")
 
